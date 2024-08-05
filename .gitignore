@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+.Python
+env/
+venv/
+*.env
+.flaskenv
+
+# Database
+*.db
+*.sqlite3
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# IDE (Optional, if you use VS Code, etc.)
+.vscode/
+.history
+/history

@@ -1,0 +1,74 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": ["Hi", "Hello", "Hey", "Good morning", "Good afternoon", "Good evening", "Hi there"],
+      "responses": ["Hello!", "Hi there!", "Greetings!", "Hey! How can I help you today?", "Nice to see you again!"]
+    },
+    {
+      "tag": "how_are_you",
+      "patterns": ["How are you?", "How's it going?", "Are you doing well?", "How are things?"],
+      "responses": ["I'm doing great, thank you for asking!", "I'm a bot, so I don't have feelings, but I'm ready to assist you!", "All good! How about you?", "I'm functioning perfectly, thanks!"]
+    },
+    {
+      "tag": "user_name",
+      "patterns": ["What is my name?", "Do you know my name?", "My name is [name]", "I am [name]", "You can call me [name]", "I'm [name]"],
+      "responses": ["Hello [name], nice to meet you!", "Your name is [name], if I remember correctly.", "I believe your name is [name]. How can I help you?", "It's [name], right?"]
+    },
+    {
+      "tag": "coding_tips",
+      "patterns": ["Give me coding tips", "How to improve coding?", "Best coding practices", "Tips for programmers", "Coding advice"],
+      "responses": ["Always write clean, readable code. Use meaningful variable names and add comments. Don't forget to test your code thoroughly! Try to understand the 'why' behind solutions, not just the 'how'.", "Practice regularly with small projects. Read code written by others and refactor your own code. Get feedback on your code!"]
+    },
+    {
+      "tag": "junior_developer",
+      "patterns": ["Advice for junior developers", "I'm a junior dev, what should I do?", "Tips for new programmers", "How to succeed as a junior developer"],
+      "responses": ["Focus on building projects, contribute to open source, and never stop learning. Network with other developers and ask for help when needed. Don't be afraid to make mistakes; they're learning opportunities."]
+    },
+    {
+      "tag": "ai",
+      "patterns": ["What is AI?", "Explain Artificial Intelligence", "Tell me about AI", "What's AI?", "Define AI"],
+      "responses": ["AI, or Artificial Intelligence, refers to the simulation of human intelligence in machines that are programmed to think like humans and mimic their actions. It's a broad field aiming to make machines intelligent.", "AI is a field of computer science dedicated to solving cognitive problems commonly associated with human intelligence, such as learning, problem-solving, and pattern recognition."]
+    },
+    {
+      "tag": "development",
+      "patterns": ["What is web development?", "Explain software development", "Development concepts", "What's software engineering?"],
+      "responses": ["Software development is the process of designing, creating, deploying, and maintaining software. It involves various stages including research, new development, prototyping, modification, reuse, re-engineering, maintenance, or any other activities that result in software products.", "Web development involves building websites and web applications. It can be divided into frontend (what users see) and backend (server-side logic and databases)."]
+    },
+    {
+      "tag": "programming_languages",
+      "patterns": ["Which programming language should I learn?", "Popular programming languages", "Best languages for AI", "What language is good for web dev?", "Top programming languages"],
+      "responses": ["Python is highly recommended for AI and data science due to its extensive libraries and readability. JavaScript is great for web development, and C++ is powerful for system-level programming and game development. The best language often depends on your specific goals!"]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": ["Bye", "Goodbye", "See you later", "Farewell", "Gotta go"],
+      "responses": ["Goodbye!", "See you soon!", "Have a great day!", "Farewell! Take care!", "Talk to you later!"]
+    },
+    {
+      "tag": "thanks",
+      "patterns": ["Thank you", "Thanks", "Appreciate it", "That's helpful", "Thanks a lot"],
+      "responses": ["You're welcome!", "Glad I could help!", "Anytime!", "No problem!", "My pleasure!"]
+    },
+    {
+      "tag": "name",
+      "patterns": ["What's your name?", "Who are you?", "What should I call you?"],
+      "responses": ["I am DevChatbot-AI, an AI assistant designed to help with development, programming, and AI topics.", "You can call me DevChatbot-AI. I'm a virtual assistant."]
+    },
+    {
+      "tag": "capabilities",
+      "patterns": ["What can you do?", "What are your functions?", "How can you help me?", "What do you know?"],
+      "responses": ["I can answer questions about programming, AI, software development, and provide general tech tips. Just ask me!", "I'm here to assist you with inquiries related to development, AI, and coding practices. I can also engage in general conversation."]
+    },
+    {
+      "tag": "creator",
+      "patterns": ["Who created you?", "Who is your developer?", "Who made you?"],
+      "responses": ["I was created by a team of developers at DevChatbot-AI. They designed me to help you!"]
+    },
+    {
+      "tag": "joke",
+      "patterns": ["Tell me a joke", "Make me laugh", "Joke"],
+      "responses": ["Why do programmers prefer dark mode? Because light attracts bugs!", "Why was the JavaScript developer sad? Because he didn't Node how to Express himself.", "I'm not much of a comedian, but I can tell you a bit about machine learning!"]
+    }
+  ]
+}

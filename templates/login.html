@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register - DevChatbot-AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .flash-message {
+            padding: 0.75rem 1.25rem;
+            margin-bottom: 1rem;
+            border: 1px solid transparent;
+            border-radius: 0.25rem;
+        }
+        .flash-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .flash-error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        .flash-warning {
+            color: #856404;
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+        }
+        .flash-info {
+            color: #0c5460;
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
+        <h1 class="text-3xl font-extrabold text-center text-blue-700 mb-8">Login / Register</h1>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="mb-6">
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }} text-sm mb-2 rounded-lg p-3" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <!-- Tab Navigation -->
+        <div class="flex border-b mb-6">
+            <button id="login-tab" class="flex-1 py-3 px-4 text-center font-semibold text-gray-700 border-b-2 border-blue-500 hover:text-blue-700 focus:outline-none transition-colors duration-200">Login</button>
+            <button id="register-tab" class="flex-1 py-3 px-4 text-center font-semibold text-gray-500 border-b-2 border-transparent hover:text-blue-700 focus:outline-none transition-colors duration-200">Register</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form" action="{{ url_for('email_auth.login') }}" method="POST" class="space-y-6">
+            <div>
+                <label for="login-email-username" class="block text-gray-700 text-sm font-bold mb-2">Email or Username:</label>
+                <input type="text" id="login-email-username" name="email_or_username" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+            <div>
+                <label for="login-password" class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
+                <input type="password" id="login-password" name="password" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+            <div class="flex items-center justify-between">
+                <label class="flex items-center text-gray-600 text-sm">
+                    <input type="checkbox" name="remember_me" class="form-checkbox h-4 w-4 text-blue-600 rounded">
+                    <span class="ml-2">Remember me</span>
+                </label>
+                <a href="#" class="inline-block align-baseline font-bold text-sm text-blue-600 hover:text-blue-800">Forgot Password?</a>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl focus:outline-none focus:shadow-outline transition duration-300 transform hover:scale-105 shadow-md">
+                Login
+            </button>
+        </form>
+
+        <!-- Register Form -->
+        <form id="register-form" action="{{ url_for('email_auth.register') }}" method="POST" class="space-y-6 hidden">
+            <div>
+                <label for="register-username" class="block text-gray-700 text-sm font-bold mb-2">Username:</label>
+                <input type="text" id="register-username" name="username" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+            <div>
+                <label for="register-email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+                <input type="email" id="register-email" name="email" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+            <div>
+                <label for="register-password" class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
+                <input type="password" id="register-password" name="password" class="shadow appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-xl focus:outline-none focus:shadow-outline transition duration-300 transform hover:scale-105 shadow-md">
+                Register
+            </button>
+        </form>
+
+        <div class="mt-8 text-center">
+            <p class="text-gray-600 text-sm mb-4">Or log in with another account:</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <a href="{{ url_for('facebook.login') }}" class="inline-flex items-center justify-center bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-6 rounded-xl shadow-md transition duration-300 transform hover:scale-105">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.776-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33V22C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
+                    Log in with Facebook
+                </a>
+                <!-- Google Login Button - Corrected href to Flask route -->
+                <a href="{{ url_for('google.google_login') }}" id="google-login-button" class="inline-flex items-center justify-center bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-xl shadow-md transition duration-300 transform hover:scale-105">
+                    <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.000 0.000C8.756 0.000 6.000 2.756 6.000 6.000C6.000 9.244 8.756 12.000 12.000 12.000C15.244 12.000 18.000 9.244 18.000 6.000C18.000 2.756 15.244 0.000 12.000 0.000ZM12.000 16.500C6.986 16.500 2.750 13.250 0.000 9.000C0.000 9.000 0.000 9.000 0.000 9.000C0.000 9.000 0.000 9.000 0.000 9.000C2.750 4.750 6.986 1.500 12.000 1.500C17.014 1.500 21.250 4.750 24.000 9.000C24.000 9.000 24.000 9.000 24.000 9.000C24.000 9.000 24.000 9.000 24.000 9.000C21.250 13.250 17.014 16.500 12.000 16.500Z" fill="white"/><path d="M12 2.5a6 6 0 00-6 6c0 1.57.48 3.03 1.3 4.25l-.78 1.35a7.5 7.5 0 01-1.52-2.1c-.24-.65-.3-1.35-.15-2.02l-.01.01V9h-.02a9 9 0 0115.01-6.74c.24.65.3 1.35.15 2.02l.01-.01V9h.02A9 9 0 0112 2.5z" fill="#4285F4"/><path d="M12 2.5V9h-6V2.5z" fill="#E8F0FE"/><path d="M12 9V2.5a6 6 0 016 6h-6z" fill="#FBBC04"/><path d="M12 11.5a6 6 0 00-6-6v6h6z" fill="#EA4335"/><path d="M12 11.5v-6a6 6 0 016 6h-6z" fill="#34A853"/></svg>
+                    Log in with Google
+                </a>
+            </div>
+            <!-- Back to Home Button -->
+            <p class="mt-4">
+                <a href="{{ url_for('home') }}" class="inline-block bg-gray-200 text-gray-700 font-bold py-2 px-4 rounded-xl hover:bg-gray-300 transition duration-300 transform hover:scale-105 shadow-md">
+                    Back to Home
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const loginTab = document.getElementById('login-tab');
+        const registerTab = document.getElementById('register-tab');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        // googleLoginButton is no longer needed in JS as its href is set directly in HTML
+        // const googleLoginButton = document.getElementById('google-login-button'); 
+
+        function showLoginForm() {
+            loginTab.classList.remove('text-gray-500', 'border-transparent');
+            loginTab.classList.add('text-blue-700', 'border-blue-500');
+            registerTab.classList.remove('text-blue-700', 'border-blue-500');
+            registerTab.classList.add('text-gray-500', 'border-transparent');
+            loginForm.classList.remove('hidden');
+            registerForm.classList.add('hidden');
+        }
+
+        function showRegisterForm() {
+            registerTab.classList.remove('text-gray-500', 'border-transparent');
+            registerTab.classList.add('text-blue-700', 'border-blue-500');
+            loginTab.classList.remove('text-blue-700', 'border-blue-500');
+            loginTab.classList.add('text-gray-500', 'border-transparent');
+            registerForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+        }
+
+        loginTab.addEventListener('click', showLoginForm);
+        registerTab.addEventListener('click', showRegisterForm);
+
+        // Show login form by default when the page loads
+        document.addEventListener('DOMContentLoaded', showLoginForm);
+    </script>
+</body>
+</html>

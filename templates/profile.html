@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile - DevChatbot-AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .flash-message {
+            padding: 0.75rem 1.25rem;
+            margin-bottom: 1rem;
+            border: 1px solid transparent;
+            border-radius: 0.25rem;
+        }
+        .flash-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .flash-error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+        .flash-warning {
+            color: #856404;
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+        }
+        .flash-info {
+            color: #0c5460;
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md text-center">
+        <h1 class="text-3xl font-extrabold text-blue-700 mb-6">Your Profile</h1>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="mb-6">
+                    {% for category, message in messages %}
+                        <div class="flash-message flash-{{ category }} text-sm mb-2 rounded-lg p-3" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% if current_user.is_authenticated %}
+            {% if current_user.avatar %}
+                <img src="{{ current_user.avatar }}" alt="User Avatar" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-blue-300 shadow-md">
+            {% else %}
+                <div class="w-24 h-24 rounded-full mx-auto mb-4 bg-gray-200 flex items-center justify-center text-gray-500 text-5xl font-bold">
+                    {{ current_user.username[0]|upper }}
+                </div>
+            {% endif %}
+            <p class="text-xl font-semibold text-gray-800 mb-2">Welcome, {{ current_user.username }}!</p>
+            <p class="text-gray-600 mb-6">Email: {{ current_user.email }}</p>
+
+            <a href="{{ url_for('home') }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline transition duration-300 transform hover:scale-105 shadow-md mr-2">
+                Back to Home
+            </a>
+            <a href="{{ url_for('logout') }}" class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline transition duration-300 transform hover:scale-105 shadow-md ml-2">
+                Logout
+            </a>
+        {% else %}
+            <p class="text-gray-600 mb-6">You are not logged in. Please log in.</p>
+            <a href="{{ url_for('email_auth.login') }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl focus:outline-none focus:shadow-outline transition duration-300 transform hover:scale-105 shadow-md">
+                Login
+            </a>
+        {% endif %}
+    </div>
+</body>
+</html>

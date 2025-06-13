@@ -5,9 +5,9 @@
 Here's a glimpse of the DevChatbot-AI in action:
 
 **Main Chat Interface**
-![DevChatbot-AI Ana Ekranı](static/img/screenshot.png) <!-- Ensure screenshot.png is in static/img/ -->
+![DevChatbot-AI Ana Ekranı](static/img/Screenshot-app.png) <!-- Ensure screenshot.png is in static/img/ -->
 
-![DevChatbot-AI Logo](static/img/logo.png) <!-- Ensure you have a logo.png in static/img/ -->
+![DevChatbot-AI Logo](static/img/icon.png) <!-- Ensure you have a logo.png in static/img/ -->
 
 DevChatbot-AI is a comprehensive Flask-based web application that provides an interactive chatbot experience with both text and voice input/output capabilities. It integrates with Groq for advanced AI responses and includes a robust user authentication system with email/password, Facebook, and Google login options. Unauthenticated users have a limited number of queries before being prompted to register.
 

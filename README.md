@@ -158,6 +158,30 @@ The application will typically be accessible at `http://127.0.0.1:8000` (Gunicor
 
 ---
 
+## Deployment to Raspberry Pi 5 (Docker)
+
+You can easily host this application on your Raspberry Pi 5 or any other Docker-enabled server.
+
+1.  **Prepare the Host:**
+    Ensure Docker and Docker Compose are installed on your Raspberry Pi.
+2.  **Configure Environment:**
+    Ensure you have a `.env` file containing your `SECRET_KEY`, `GROQ_API_KEY`, and OAuth keys.
+3.  **Prepare Database File:**
+    Run the following command to create an empty `users.db` file so Docker doesn't mistakenly create a directory when mounting volumes:
+    ```bash
+    touch users.db
+    ```
+4.  **Run the Container:**
+    Build and start the container in detached mode:
+    ```bash
+    docker-compose up -d --build
+    ```
+5.  **Access the App:**
+    The application will be accessible at `http://<YOUR_PI_IP_ADDRESS>:8000`. 
+    *Note: Update your Google/Facebook OAuth redirect URIs to point to this new IP Address/Domain.*
+
+---
+
 ## Deployment to Render.com
 
 1.  **Commit to GitHub:** Ensure your project (excluding `.env` and `.db` files, which should be in `.gitignore`) is pushed to a GitHub repository.

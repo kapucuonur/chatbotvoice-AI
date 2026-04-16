@@ -1,5 +1,7 @@
 # DevChatbot-AI: Voice & Text Chatbot System
 
+🚀 **Live Demo:** [https://chat.trihonor.com/](https://chat.trihonor.com/)
+
 ## Screenshots
 
 Here's a glimpse of the DevChatbot-AI in action:

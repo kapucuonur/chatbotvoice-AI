@@ -9,8 +9,12 @@ import json
 import random
 from groq import Groq
 from dotenv import load_dotenv
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 app = Flask(__name__)
+# Tell Flask it is behind a proxy (like Cloudflare Tunnel) to ensure https:// scheme in auth callbacks
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
+
 # Secret key is crucial for session security
 app.secret_key = os.getenv('SECRET_KEY', os.urandom(24))
 load_dotenv() # Loads environment variables from .env file

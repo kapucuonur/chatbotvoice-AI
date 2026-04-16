@@ -18,6 +18,7 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 # Secret key is crucial for session security
 app.secret_key = os.getenv('SECRET_KEY', os.urandom(24))
 load_dotenv() # Loads environment variables from .env file
+os.environ["OAUTHLIB_RELAX_TOKEN_SCOPE"] = "1"
 
 # Groq API settings
 groq_api_key = os.getenv("GROQ_API_KEY")

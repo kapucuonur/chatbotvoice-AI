@@ -59,24 +59,34 @@ def google_callback():
         # Find or create the user in your database
         user = User.query.filter_by(google_id=user_info['id']).first()
         if not user:
-            # If user does not exist, create a new one
-            user = User(
-                email=user_info['email'],
-                username=user_info.get('name', user_info['email'].split('@')[0]), # Use name if available, else part of email
-                google_id=user_info['id'],
-                avatar=user_info.get('picture') # Google often provides a picture URL
-            )
-            # If `password_hash` is nullable=False in your User model,
-            # you must assign a value (e.g., a placeholder hash or None if nullable).
-            user.password_hash = None # Set to None as Google handles auth
-            
-            db.session.add(user)
-            db.session.commit()
+            # Check if user with this email already exists
+            user_by_email = User.query.filter_by(email=user_info['email']).first() if 'email' in user_info else None
+            if user_by_email:
+                user_by_email.google_id = user_info['id']
+                user_by_email.avatar = user_info.get('picture', user_by_email.avatar)
+                user = user_by_email
+                db.session.commit()
+            else:
+                base_username = user_info.get('name', user_info['email'].split('@')[0])
+                unique_username = base_username
+                counter = 1
+                while User.query.filter_by(username=unique_username).first():
+                    unique_username = f"{base_username}{counter}"
+                    counter += 1
+                    
+                user = User(
+                    email=user_info['email'],
+                    username=unique_username,
+                    google_id=user_info['id'],
+                    avatar=user_info.get('picture')
+                )
+                user.password_hash = None
+                
+                db.session.add(user)
+                db.session.commit()
         else:
-            # Update existing user details if necessary
-            user.email = user_info['email']
-            user.username = user_info.get('name', user.username) # Update name if changed
-            user.avatar = user_info.get('picture', user.avatar) # Update avatar if changed
+            # Update existing user details (DO NOT blindly update username if it can throw IntegrityError)
+            user.avatar = user_info.get('picture', user.avatar) 
             db.session.commit()
 
         # Log the user in with Flask-Login

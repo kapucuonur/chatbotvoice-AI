@@ -61,25 +61,33 @@ def facebook_callback():
         # Find or create the user in your database
         user = User.query.filter_by(facebook_id=user_info['id']).first()
         if not user:
-            # For users logging in with Facebook, set a default password hash
-            # (You can leave this field empty or add more complex logic if needed)
-            user = User(
-                email=user_info['email'],
-                username=user_info['name'],
-                facebook_id=user_info['id'],
-                avatar=user_info.get('picture', {}).get('data', {}).get('url')
-            )
-            # If `password_hash` is nullable=False, you must assign a value.
-            # user.set_password(str(os.urandom(16))) # A random password hash
-            user.password_hash = None # We can leave it null if nullable
-            
-            db.session.add(user)
-            db.session.commit()
+            # Check if user with this email already exists
+            user_by_email = User.query.filter_by(email=user_info['email']).first() if 'email' in user_info else None
+            if user_by_email:
+                user_by_email.facebook_id = user_info['id']
+                user_by_email.avatar = user_info.get('picture', {}).get('data', {}).get('url', user_by_email.avatar)
+                user = user_by_email
+                db.session.commit()
+            else:
+                base_username = user_info['name']
+                unique_username = base_username
+                counter = 1
+                while User.query.filter_by(username=unique_username).first():
+                    unique_username = f"{base_username}{counter}"
+                    counter += 1
+                
+                user = User(
+                    email=user_info['email'],
+                    username=unique_username,
+                    facebook_id=user_info['id'],
+                    avatar=user_info.get('picture', {}).get('data', {}).get('url')
+                )
+                user.password_hash = None # We can leave it null if nullable
+                db.session.add(user)
+                db.session.commit()
         else:
-            # Update existing user details if necessary
-            user.email = user_info['email']
-            user.username = user_info['name']
-            user.avatar = user_info.get('picture', {}).get('data', {}).get('url')
+            # Update existing user details (avoid updating username to prevent IntegrityError)
+            user.avatar = user_info.get('picture', {}).get('data', {}).get('url', user.avatar)
             db.session.commit()
 
         # Log the user in with Flask-Login

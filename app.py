@@ -56,7 +56,7 @@ for blueprint in all_blueprints:
 with app.app_context():
     # You can use db.create_all() for initial setup or if you need to create tables.
     # However, once you start using migrations, it's safer to comment out this line.
-    # db.create_all()
+    db.create_all()
     pass
 
 

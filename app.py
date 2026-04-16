@@ -7,7 +7,7 @@ import os
 import re
 import json
 import random
-import google.generativeai as genai
+from groq import Groq
 from dotenv import load_dotenv
 
 app = Flask(__name__)
@@ -15,14 +15,14 @@ app = Flask(__name__)
 app.secret_key = os.getenv('SECRET_KEY', os.urandom(24))
 load_dotenv() # Loads environment variables from .env file
 
-# Gemini API settings
-gemini_api_key = os.getenv("GEMINI_API_KEY")
-if not gemini_api_key:
-    print("WARNING: GEMINI_API_KEY environment variable is not set. Gemini API features might be unavailable.")
-    model = None # Set model to None if API key is missing
+# Groq API settings
+groq_api_key = os.getenv("GROQ_API_KEY")
+if not groq_api_key:
+    print("WARNING: GROQ_API_KEY environment variable is not set. Groq API features might be unavailable.")
+    groq_client = None # Set client to None if API key is missing
 else:
-    genai.configure(api_key=gemini_api_key)
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    groq_client = Groq(api_key=groq_api_key)
+
 # Database configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI', 'sqlite:///users.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False # Suppresses unnecessary warnings
@@ -113,13 +113,16 @@ def handle_user_input(user_input):
 
     # Try to find a response in intents.json
     response_text = get_response_from_intents(user_input)
-    if not response_text: # If not found in intents, use Gemini
-        if model:
+    if not response_text: # If not found in intents, use Groq
+        if groq_client:
             try:
-                gemini_response = model.generate_content(user_input)
-                response_text = gemini_response.text.strip()
+                groq_response = groq_client.chat.completions.create(
+                    messages=[{"role": "user", "content": user_input}],
+                    model="llama-3.3-70b-versatile",
+                )
+                response_text = groq_response.choices[0].message.content.strip()
             except Exception as e:
-                app.logger.error(f"Gemini API error: {e}")
+                app.logger.error(f"Groq API error: {e}")
                 response_text = "Sorry, I am unable to process your request at the moment. Please try again later."
         else:
             response_text = "Sorry, the AI service is currently unavailable. Please try again later."

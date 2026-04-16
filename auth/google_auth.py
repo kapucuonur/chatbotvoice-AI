@@ -13,7 +13,7 @@ google_blueprint = make_google_blueprint(
     client_id=os.getenv("GOOGLE_OAUTH_CLIENT_ID"),
     client_secret=os.getenv("GOOGLE_OAUTH_CLIENT_SECRET"),
     scope=["openid", "https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email"],  # Request basic user info
-    redirect_to="google_auth.google_callback", # Explicit callback route within this blueprint
+    redirect_to="google.google_callback", # Explicit callback route within this blueprint
 )
 
 @google_blueprint.route("/google_login")

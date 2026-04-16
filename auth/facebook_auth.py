@@ -16,7 +16,7 @@ facebook_blueprint = make_facebook_blueprint(
     client_id=os.getenv("FACEBOOK_OAUTH_CLIENT_ID"),
     client_secret=os.getenv("FACEBOOK_OAUTH_CLIENT_SECRET"),
     scope=["email", "public_profile"],  # Request email and basic profile info
-    redirect_to="auth.facebook_callback",  # Explicit callback route
+    redirect_to="facebook.facebook_callback",  # Explicit callback route
 )
 
 # Define routes specific to this blueprint

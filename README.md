@@ -19,7 +19,7 @@ DevChatbot-AI is a comprehensive Flask-based web application that provides an in
 - **Speech-to-Text (STT):** Utilizes the Web Speech API for transcribing user voice input.
 - **Text-to-Speech (TTS):** Bot responses are spoken aloud using the Web Speech API.
 - **Voice Control:** Pause and resume voice output during bot responses.
-- **AI Integration (Groq):** Leverages the Groq API for intelligent and dynamic chatbot responses.
+- **AI Integration (Gemini):** Leverages the Google Gemini API for intelligent and dynamic chatbot responses.
 - **Intent-Based Responses:** Includes pre-defined intents for common queries (e.g., greetings, programming topics).
 - **User Authentication:**
   - Email and Password registration/login.
@@ -77,7 +77,7 @@ pip install -r requirements.txt
 Create a `.env` file in the root of your project and add the following environment variables. **Do NOT commit this file to Git!**
 
 ```ini
-GROQ_API_KEY=YOUR_GROQ_API_KEY_HERE
+GEMINI_API_KEY=YOUR_GEMINI_API_KEY_HERE
 SECRET_KEY=YOUR_FLASK_SECRET_KEY_HERE # Generate a strong random key (e.g., import os; os.urandom(24))
 GOOGLE_OAUTH_CLIENT_ID=YOUR_GOOGLE_CLIENT_ID_HERE
 GOOGLE_OAUTH_CLIENT_SECRET=YOUR_GOOGLE_CLIENT_SECRET_HERE
@@ -165,7 +165,7 @@ You can easily host this application on your Raspberry Pi 5 or any other Docker-
 1.  **Prepare the Host:**
     Ensure Docker and Docker Compose are installed on your Raspberry Pi.
 2.  **Configure Environment:**
-    Ensure you have a `.env` file containing your `SECRET_KEY`, `GROQ_API_KEY`, and OAuth keys.
+    - Ensure you have a `.env` file containing your `SECRET_KEY`, `GEMINI_API_KEY`, and OAuth keys.
 3.  **Prepare Database File:**
     Run the following command to create an empty `users.db` file so Docker doesn't mistakenly create a directory when mounting volumes:
     ```bash

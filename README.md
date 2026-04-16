@@ -158,42 +158,29 @@ The application will typically be accessible at `http://127.0.0.1:8000` (Gunicor
 
 ---
 
-## Deployment to Raspberry Pi 5 (Docker)
+## Deployment Architecture (Raspberry Pi 5 + Cloudflare)
 
-You can easily host this application on your Raspberry Pi 5 or any other Docker-enabled server.
+This project is actively self-hosted on a **Raspberry Pi 5** using a modern cloud architecture.
 
-1.  **Prepare the Host:**
-    Ensure Docker and Docker Compose are installed on your Raspberry Pi.
-2.  **Configure Environment:**
-    Ensure you have a `.env` file containing your `SECRET_KEY`, `GROQ_API_KEY`, and OAuth keys.
-3.  **Prepare Database File:**
-    Run the following command to create an empty `users.db` file so Docker doesn't mistakenly create a directory when mounting volumes:
-    ```bash
-    touch users.db
-    ```
-4.  **Run the Container:**
-    Build and start the container in detached mode:
-    ```bash
-    docker-compose up -d --build
-    ```
-5.  **Access the App:**
-    The application will be accessible at `http://<YOUR_PI_IP_ADDRESS>:8000`. 
-    *Note: Update your Google/Facebook OAuth redirect URIs to point to this new IP Address/Domain.*
+### 1. Dockerized Backend
+The application runs stably inside isolated Docker containers. The included `Dockerfile` and `docker-compose.yml` facilitate a one-command, reproducible environment setup encompassing the Gunicorn WSGI server, Python dependencies, and database persistence.
 
----
+### 2. SQLite Volume Mount
+User data and state are preserved across server restarts by mounting `./users.db` and `./data` as external Docker volumes. This ensures data integrity even when the app containers are being actively rebuilt or updated.
 
-## Deployment to Render.com
+### 3. Cloudflare Tunnel (Reverse Proxy)
+To securely expose the Raspberry Pi to the internet under a custom domain (`chat.trihonor.com`), the system utilizes a **Cloudflare Tunnel**. This eliminates the need for complex port-forwarding and inherently provides SSL/TLS encryption.
 
-1.  **Commit to GitHub:** Ensure your project (excluding `.env` and `.db` files, which should be in `.gitignore`) is pushed to a GitHub repository.
-2.  **Create Web Service on Render:**
-    - Go to [Render.com](https://render.com/) and create a new Web Service.
-    - Connect your GitHub repository.
-    - **Build Command:** `pip install -r requirements.txt`
-    - **Start Command:** `gunicorn app:app`
-    - **Environment Variables:** Add all variables from your `.env` file to Render's environment settings.
-    - **Update Redirect URIs:** Crucially, update your Google and Facebook OAuth client configurations (in their respective developer consoles) to include your Render.com application's URL for the redirect URIs (e.g., `https://your-app-name.onrender.com/auth/google/callback`).
-    - **Database (PostgreSQL recommended):** For persistent data on Render, create a PostgreSQL database on Render and update `SQLALCHEMY_DATABASE_URI` to use its connection string. You'll need to install `psycopg2-binary` and potentially use Flask-Migrate to transfer your schema.
-    ### Live Link https://chatbotvoice-ai.onrender.com/
+### 4. Nginx / ProxyFix Integration
+Because the Flask application runs behind the Cloudflare Proxy, the `app.py` logic natively implements Werkzeug's `ProxyFix`. This parses `X-Forwarded-Proto` and `X-Forwarded-For` headers to ensure OAuth callbacks (Google & Facebook) inherently use `https://` secure redirects without triggering _Insecure Transport Errors_.
+
+### Deploying Updates on the Server
+To pull and apply new updates on the live Raspberry Pi environment:
+```bash
+git pull origin main
+docker compose down
+docker compose up -d --build
+```
 
 ---
 

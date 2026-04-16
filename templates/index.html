@@ -55,9 +55,17 @@
         <!-- Logo Added Here -->
         <img src="/static/img/icon.png" alt="DevChatbot-AI Logo" class="h-10 w-10 mr-4 rounded-full border-2 border-white">
         <h1 class="text-3xl font-extrabold text-center flex-grow">DevChatbot-AI (Voice & Text System)</h1>
-        <nav class="flex space-x-4">
-            <a href="{{ url_for('email_auth.login') }}" class="text-white text-lg font-semibold hover:text-blue-200 transition duration-200">Login</a>
-            <a href="{{ url_for('email_auth.register') }}" class="text-white text-lg font-semibold hover:text-blue-200 transition duration-200">Register</a>
+        <nav class="flex space-x-4 items-center">
+            {% if current_user.is_authenticated %}
+                <span class="text-green-300 text-lg font-semibold flex items-center">
+                    <span class="w-2.5 h-2.5 bg-green-400 rounded-full mr-2"></span>
+                    {{ current_user.username }}
+                </span>
+                <a href="{{ url_for('logout') }}" class="text-white text-lg font-semibold hover:text-red-300 transition duration-200 border border-white px-3 py-1 rounded hover:bg-white hover:bg-opacity-10">Logout</a>
+            {% else %}
+                <a href="{{ url_for('email_auth.login') }}" class="text-white text-lg font-semibold hover:text-blue-200 transition duration-200">Login</a>
+                <a href="{{ url_for('email_auth.register') }}" class="text-white text-lg font-semibold hover:text-blue-200 transition duration-200">Register</a>
+            {% endif %}
         </nav>
     </header>
 

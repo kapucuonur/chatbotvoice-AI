@@ -19,3 +19,5 @@ Thumbs.db
 .vscode/
 .history
 /history
+# SQLite database (accounts); kept on the host, never in git
+instance/

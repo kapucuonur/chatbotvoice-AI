@@ -10,8 +10,9 @@ services:
     env_file:
       - .env
     volumes:
-      # Mount the sqlite DB and intents to persist data across container restarts
-      - ./users.db:/app/users.db
+      # Flask-SQLAlchemy puts sqlite:///users.db in the app's instance folder (/app/instance/users.db), not in /app:
+      # without this mount the accounts lived in the container and a rebuild would have deleted them.
+      - ./instance:/app/instance
       - ./data:/app/data
     environment:
       - SQLALCHEMY_DATABASE_URI=sqlite:///users.db

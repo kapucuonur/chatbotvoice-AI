@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Deletion Status - DevChatbot-AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+<main class="max-w-2xl mx-auto px-4 py-10">
+    <h1 class="text-3xl font-bold mb-6">Data deletion status</h1>
+    <section class="bg-white rounded-lg shadow p-6 mb-6">
+        <p class="mb-3">Deletion requests are handled within 30 days of receiving your email. When your data has been
+            deleted, we confirm it to the email address of your account.</p>
+        <p>To ask about a request, write to
+            <a class="text-blue-600 underline" href="mailto:info@trihonor.com?subject=DevChatbot-AI%20data%20deletion%20status">info@trihonor.com</a>.</p>
+    </section>
+    <p class="text-sm text-gray-500">
+        <a class="text-blue-600 underline" href="{{ url_for('data_deletion_instructions') }}">How to delete your data</a> ·
+        <a class="text-blue-600 underline" href="{{ url_for('home') }}">Back to DevChatbot-AI</a></p>
+</main>
+</body>
+</html>

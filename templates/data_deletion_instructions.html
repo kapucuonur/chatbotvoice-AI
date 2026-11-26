@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Deletion - DevChatbot-AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+<main class="max-w-2xl mx-auto px-4 py-10">
+    <h1 class="text-3xl font-bold mb-6">How to delete your data</h1>
+
+    <section class="bg-white rounded-lg shadow p-6 mb-6">
+        <h2 class="text-xl font-semibold mb-3">What we store</h2>
+        <p class="mb-2">If you created an account, DevChatbot-AI stores:</p>
+        <ul class="list-disc pl-6 space-y-1">
+            <li>your username and email address,</li>
+            <li>a hashed password, if you signed up with email,</li>
+            <li>your Facebook or Google account ID and profile picture link, if you signed in with them.</li>
+        </ul>
+        <p class="mt-3">Your chat messages are not stored.</p>
+    </section>
+
+    <section class="bg-white rounded-lg shadow p-6 mb-6">
+        <h2 class="text-xl font-semibold mb-3">Request deletion</h2>
+        <p class="mb-3">Send an email to
+            <a class="text-blue-600 underline" href="mailto:info@trihonor.com?subject=DevChatbot-AI%20data%20deletion">info@trihonor.com</a>
+            from the address of your account, with the subject “DevChatbot-AI data deletion”.</p>
+        <p>We delete your account and all the data listed above within 30 days and confirm by email.</p>
+    </section>
+
+    <section class="bg-white rounded-lg shadow p-6 mb-6">
+        <h2 class="text-xl font-semibold mb-3">Signed in with Facebook?</h2>
+        <p>You can also remove the app's access to your Facebook account: in Facebook, open
+            <em>Settings &amp; privacy → Settings → Apps and websites</em>, select DevChatbot-AI and choose
+            <em>Remove</em>. Then send us the email above so that we delete the data we hold.</p>
+    </section>
+
+    <p class="text-sm text-gray-500">Controller: TriHonor, Tampere, Finland.
+        <a class="text-blue-600 underline" href="{{ url_for('data_deletion_status') }}">Check a deletion request</a> ·
+        <a class="text-blue-600 underline" href="{{ url_for('home') }}">Back to DevChatbot-AI</a></p>
+</main>
+</body>
+</html>
